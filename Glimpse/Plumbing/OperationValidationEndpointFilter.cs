@@ -6,11 +6,16 @@ public class OperationValidationEndpointFilter : IEndpointFilter
 {
     public async ValueTask<object> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        var response = await next(context);
+        var response = await next(context);                
 
-        if (response is Operation.IResponse op && !op.IsValid)
-            return Results.BadRequest(response);
-        
+        if (response is Operation.IResponse op)
+        {
+            if (!op.IsValid)
+                return Results.UnprocessableEntity(new { op.Errors });
+
+            return Results.Ok(op.Result);
+        }
+
         return Results.Ok(response);
     }
 }

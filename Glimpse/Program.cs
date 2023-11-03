@@ -2,9 +2,7 @@ using Glimpse.Db;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using MediatR.Endpoints;
-using Glimpse.Operations;
 using Glimpse.Plumbing;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,21 +16,13 @@ builder.Services.AddDbContext<GlimpseDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddLogging(config => config.AddDebug());
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
-builder.Services.AddMediatREndoints(cfg => 
-{
-    cfg.AddRouteGroupBuilder(a => a.AddEndpointFilter<ModelStateValidationEndpointFilter>());
-    cfg.AddRouteGroupBuilder(a => a.AddEndpointFilter<OperationValidationEndpointFilter>());
-    //cfg.UseEndpointHandlerDelegateFactory<HandlerFactory>();
-});// cfg => 
-//{
-//    cfg.AddRouteGroupBuilder(a => a.AddEndpointFilter<ModelStateValidationEndpointFilter2>().AddEndpointFilter<ModelStateValidationEndpointFilter>());
-//    cfg.MapGet<GetProfile.Query>(handler: async (IMediator mediator, [AsParameters] GetProfile.Query request) =>
-//    {
-//        var response = await mediator.Send(request);
-//        return Results.Ok(response.Result);
-//    });
-//});
+builder.Services.AddMediatR(cfg => cfg
+    .RegisterServicesFromAssemblyContaining<Program>()
+    .AddOpenBehavior(typeof(DbTransactionPipelineBehavior<,>)));
+
+builder.Services.AddMediatREndoints(cfg => cfg
+    .AddRouteGroupBuilder(a => a.AddEndpointFilter<ModelStateValidationEndpointFilter>())
+    .AddRouteGroupBuilder(a => a.AddEndpointFilter<OperationValidationEndpointFilter>()));
 
 var app = builder.Build();
 

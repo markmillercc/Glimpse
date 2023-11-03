@@ -2,9 +2,9 @@
 using MediatR.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
-namespace Glimpse.Operations;
+namespace Glimpse.Operations.Profiles;
 
-[Endpoint(Method.Get, "getprofile/{ProfileId}")]
+[Endpoint(Method.Get, "get/{profileid}", Group = "profiles")]
 public class GetProfile
 {
     public class Query : Operation.IRequest<ProfileModel>
@@ -42,7 +42,7 @@ public class GetProfile
                 .FirstOrDefaultAsync(a => a.Id == request.ProfileId, cancellationToken);
 
             if (profile == null)
-                return Error($"Cannot find profile with id={request.ProfileId}");
+                return Unprocessable($"Cannot find profile with id={request.ProfileId}");
 
             return new ProfileModel
             {

@@ -2,9 +2,9 @@
 using MediatR.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
-namespace Glimpse.Operations;
+namespace Glimpse.Operations.Snapshots;
 
-[Endpoint(Method.Get)]
+[Endpoint(Method.Get, "get/{snapshotid}", Group = "snapshots")]
 public class GetSnapshot
 {
     public class Query : Operation.IRequest<SnapshotModel>
@@ -26,7 +26,7 @@ public class GetSnapshot
                 .FirstOrDefaultAsync(a => a.Id == request.SnapshotId, cancellationToken);
 
             if (snapshot == null)
-                return Error($"Cannot find snapshot id={request.SnapshotId}");
+                return Unprocessable($"Cannot find snapshot id={request.SnapshotId}");
 
             var previousSnapshot = await _db.Snapshots
                 .Include(a => a.Entries)

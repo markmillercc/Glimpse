@@ -31,12 +31,12 @@ public class ExceptionHandlingMiddleware
                 context.Response.StatusCode = bex.StatusCode;
             }
             else
-            {
+            {                
                 var reference = Guid.NewGuid();
                 _logger.LogError(ex, $"{reference}: {ex.Message}");
 
                 error = $"An unexpected error occurred. Reference: {reference}";
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             }            
 
             context.Response.ContentType = "application/json";
