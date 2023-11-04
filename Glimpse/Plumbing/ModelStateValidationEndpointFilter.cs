@@ -22,9 +22,7 @@ public class ModelStateValidationEndpointFilter : IEndpointFilter
         }
 
         if (errors.Count > 0)
-        {
             return Results.BadRequest(new { Errors = errors });
-        }
 
         return await next(context);
     }

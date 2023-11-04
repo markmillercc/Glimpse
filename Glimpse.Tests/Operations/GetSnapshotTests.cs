@@ -18,7 +18,7 @@ namespace Glimpse.Tests.Operations
 
             await Insert(profile, snapshot);
 
-            var url = $"Snapshots/Get/{snapshot.Id}";
+            var url = $"snapshots/get/{snapshot.Id}";
             var dto = await GetShouldSucceed<SnapshotModel>(url);
 
             dto.ShouldNotBeNull();
