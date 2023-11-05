@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glimpse", "Glimpse\Glimpse.csproj", "{20BFD1DC-FBD3-4497-B4D5-B6F5CD6F15D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glimpse", "Glimpse\Glimpse.csproj", "{20BFD1DC-FBD3-4497-B4D5-B6F5CD6F15D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glimpse.Tests", "Glimpse.Tests\Glimpse.Tests.csproj", "{90297E81-3AB1-497E-B6A9-9A0E64A3471C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glimpse.Tests", "Glimpse.Tests\Glimpse.Tests.csproj", "{90297E81-3AB1-497E-B6A9-9A0E64A3471C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F9E043D-33D1-44F7-A212-3DCC677D9EEC}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
